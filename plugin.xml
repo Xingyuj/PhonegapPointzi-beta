@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="pointzi" version="1.4.3" xmlns="http://apache.org/cordova/ns/plugins/1.0">
+	<name>cordova-plugin-pointzi</name>
+	<description>Pointzi SDK plugin for analytics</description>
+    <license>Apache 2.0</license>
+    
+    <keywords>pointzi, tips</keywords>
+    <repo>https://github.com/streethawkphonegap/StreethawkPlugin</repo>
+  	 <issue>support@streethawk.com</issue>
+  	 
+	<preference name="APP_KEY" />
+	<js-module name="Streethawk" src="www/Streethawk.js">
+		<clobbers target="cordova.plugins.Streethawk"/>
+	</js-module>
+    <dependency id="cordova-plugin-cocoapod-support"/>
+    
+	<platform name="ios">
+		<config-file parent="/*" target="config.xml">
+			<feature name="Streethawk">
+				<param name="ios-package" value="com.streethawk.core.pointzi"/>
+			</feature>
+		</config-file>
+
+		<!-- Apply APP_KEY to Info.plist -->
+		<config-file target="*-Info.plist" parent="APP_KEY">
+            <string>$APP_KEY</string>
+        </config-file>
+
+        <!-- Add Background fetch to Info.plist -->
+        <config-file target="*-Info.plist" parent="UIBackgroundModes">
+            <array>
+                <string>fetch</string>
+            </array>
+        </config-file>
+        
+        <!-- Add frameworks -->
+        <framework src="libxml2.tbd" />
+        <framework src="src/ios/SDK/StreetHawkCore_Pointzi.framework" embed="true" custom="true"/>
+        <source-file src="src/ios/SDK/StreetHawkCore_Pointzi.framework" target-dir="lib" framework="true" />
+
+		<!-- Add resource bundle -->
+		<resource-file src="src/ios/SDK/Pointzi.bundle" />
+	</platform>
+	<info> StreetHawk Analytics Plugin. Along with this, you will require other StreetHawk plugin
+	    
+	   1. streethawkgrowth     : For viral growth of your application
+	                           : (cordova plugin add streethawkgrowth)
+	   2. streethawkpush       : For push messaging in your application
+	   								: (cordova plugin add streethawkpush)
+	   3. streethawkbeacon 	   : For running beacon based campaigns     
+	   								: (cordova plugin add streethawkbeacon)
+	   4. streethawkgeofence   : For running geofence based campaings   
+	   								: (cordova plugin add streethawkgeofence)
+	   5. streethawklocations  : For running user's location based campaigns
+	   								: (cordova plugin add streethawklocations)
+	   6. streethawkfeeds      : For distributing feeds to your application users  
+	   								: (cordova plugin add streethawkfeeds)
+	</info>
+</plugin>
